@@ -1,9 +1,6 @@
 name: CD Chart Deployment
  
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:    
  
 jobs:
@@ -19,6 +16,10 @@ jobs:
         with:
           version: 'latest'
 
-      - name: Deploy Helm chart
-        run: |
-          helm upgrade --install package-name ./path_of_chart --namespace namespacename --create-namespace
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' # install the python version needed
+
+      - name: execute py script # run main.py
+        run: python script.py
