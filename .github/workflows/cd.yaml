@@ -1,0 +1,24 @@
+name: CD Chart Deployment
+ 
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:    
+ 
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+ 
+      - name: Set up Helm
+        uses: azure/setup-helm@v2
+        with:
+          version: 'latest'
+
+      - name: Deploy Helm chart
+        run: |
+          helm upgrade --install package-name ./path_of_chart --namespace namespacename --create-namespace
